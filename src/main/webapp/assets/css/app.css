@@ -29,3 +29,13 @@ p {
 a {
 	text-decoration: none;
 }
+
+.btn-profile i {
+	font-size: 20px;
+	vertical-align: middle;
+}
+
+.btn-profile:hover {
+	background-color: #fff;
+	color: #000;
+}

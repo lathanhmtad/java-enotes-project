@@ -37,6 +37,10 @@ public class AuthController extends HttpServlet {
 			else if(action.equals("register")) {
 				view = "/views/register.jsp";
 			}
+			else if(action.equals("logout")) {
+				SessionUtil.getInstance().removeValue(request, "userModel");
+				view = "/views/home.jsp";
+			}
 		}
 		RequestDispatcher rd = request.getRequestDispatcher(view);
 		rd.forward(request, response);
@@ -59,7 +63,6 @@ public class AuthController extends HttpServlet {
 			}	
 			else {
 				// login failed
-				response.sendRedirect(request.getContextPath() + "/auth?action=login&message=");
 			}
 		}
 		else if(action.equals("register")) {
@@ -68,14 +71,13 @@ public class AuthController extends HttpServlet {
 				// register success
 				request.setAttribute("alert", "success");
 				request.setAttribute("message", resourceBundle.getString("register_success"));
+				RequestDispatcher rd = request.getRequestDispatcher("/views/register.jsp");
+				rd.forward(request, response);		
 			}
 			else { 
 				// register failed
-				request.setAttribute("alert", "danger");
-				request.setAttribute("message", resourceBundle.getString("register_failed"));
 			}
-			RequestDispatcher rd = request.getRequestDispatcher("/views/register.jsp");
-			rd.forward(request, response);			
+				
 		}
 	}
 

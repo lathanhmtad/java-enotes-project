@@ -11,7 +11,7 @@
 		<div class="col-md-6 offset-md-3">
 			<h2 class="text-center text-dark mt-5">Login Form</h2>
 			<div class="card my-3">
-				<form class="card-body cardbody-color p-lg-5">
+				<form method="POST" action="auth?action=login" class="card-body cardbody-color p-lg-5">
 					<div class="text-center">
 						<img
 							src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"

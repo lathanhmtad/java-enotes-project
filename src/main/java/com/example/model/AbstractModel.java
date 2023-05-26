@@ -14,6 +14,4 @@ public class AbstractModel<T> {
 	private String createdBy;
 	private Timestamp modifiedDate;
 	private String modifiedBy;
-	private String message;
-	private String alert;
 }

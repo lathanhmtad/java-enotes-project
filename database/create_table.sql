@@ -11,7 +11,7 @@ CREATE TABLE user (
   modified_by VARCHAR(45) NULL
 );
 
-CREATE TABLE post (
+CREATE TABLE note (
   id bigint PRIMARY KEY auto_increment,
   title VARCHAR(255) NOT NULL,
   content text NOT NULL,
@@ -23,4 +23,4 @@ CREATE TABLE post (
 );
 
 
-ALTER TABLE post ADD CONSTRAINT fk_post_user FOREIGN KEY(user_id) REFERENCES user(id);
+ALTER TABLE note ADD CONSTRAINT fk_post_user FOREIGN KEY(user_id) REFERENCES user(id);

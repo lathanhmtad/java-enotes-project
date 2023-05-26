@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class PostModel extends AbstractModel<PostModel> {
+public class NoteModel extends AbstractModel<NoteModel> {
 	private String title;
 	private String content;
-	private Long userId;
+	private UserModel user;
 }
