@@ -1,0 +1,31 @@
+.navbar-brand, .nav-item a {
+	color: #fff;
+}
+
+.navbar-brand:hover, .nav-item a:hover {
+	background-color: #fff;
+	border-radius: 4px;
+}
+
+p {
+	margin: 0;
+}
+
+.btn-color {
+	background-color: #0e1c36;
+	color: #fff;
+}
+
+.profile-image-pic {
+	height: 200px;
+	width: 200px;
+	object-fit: cover;
+}
+
+.cardbody-color {
+	background-color: #ebf2fa;
+}
+
+a {
+	text-decoration: none;
+}
