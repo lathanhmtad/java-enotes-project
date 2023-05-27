@@ -18,6 +18,7 @@ public class NoteMapper implements RowMapper<NoteModel> {
 			note.setContent(rs.getString("content"));
 			note.setCreatedDate(rs.getTimestamp("created_date"));
 			note.setCreatedBy(rs.getString("created_by"));
+			note.setModifiedDate(rs.getTimestamp("modified_date"));
 			
 			return note;
 			

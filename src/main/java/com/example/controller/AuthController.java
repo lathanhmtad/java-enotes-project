@@ -15,69 +15,70 @@ import com.example.services.UserService;
 import com.example.utils.FormUtil;
 import com.example.utils.SessionUtil;
 
-
 @WebServlet("/auth")
 public class AuthController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
- 
-    public AuthController() {
-        super();
-    }
-    
-    private ResourceBundle resourceBundle = ResourceBundle.getBundle("message");
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public AuthController() {
+		super();
+	}
+
+	private ResourceBundle resourceBundle = ResourceBundle.getBundle("message");
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		String action = request.getParameter("action");
 		String view = "";
-		if(action != null) {
-			if(action.equals("login")) {
-				view = "/views/login.jsp";
-			}
-			else if(action.equals("register")) {
-				view = "/views/register.jsp";
-			}
-			else if(action.equals("logout")) {
-				SessionUtil.getInstance().removeValue(request, "userModel");
-				view = "/views/home.jsp";
-			}
+		if (action.equals("login")) {
+			view = "/views/login.jsp";
+		} else if (action.equals("register")) {
+			view = "/views/register.jsp";
+		} else if (action.equals("logout")) {
+			SessionUtil.getInstance().removeValue(request, "userModel");
+			view = "/views/home.jsp";
+		}
+
+		String alert = request.getParameter("alert");
+		String message = request.getParameter("message");
+
+		if (alert != null && message != null) {
+			request.setAttribute("alert", alert);
+			request.setAttribute("message", resourceBundle.getString(message));
 		}
 		RequestDispatcher rd = request.getRequestDispatcher(view);
 		rd.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
+
 		String action = request.getParameter("action");
-		
 		UserModel userModel = FormUtil.toModel(request, UserModel.class);
+
 		UserService service = new UserService();
-		
-		if(action.equals("login")) {
+
+		if (action.equals("login")) {
 			userModel = service.findOneByEmailAndPassword(userModel.getEmail(), userModel.getPassword());
-			if(userModel != null) {
+			if (userModel != null) {
 				// login success
 				SessionUtil.getInstance().putValue(request, "userModel", userModel);
 				response.sendRedirect(request.getContextPath() + "/home");
-			}	
-			else {
+			} else {
 				// login failed
+				response.sendRedirect(request.getContextPath() + "/auth?action=login&alert=danger&message=login_failed");
 			}
-		}
-		else if(action.equals("register")) {
+		} else if (action.equals("register")) {
 			Long id = service.save(userModel);
-			if(id != null) { 
+			if (id != null) {
 				// register success
-				request.setAttribute("alert", "success");
-				request.setAttribute("message", resourceBundle.getString("register_success"));
-				RequestDispatcher rd = request.getRequestDispatcher("/views/register.jsp");
-				rd.forward(request, response);		
-			}
-			else { 
+				response.sendRedirect(request.getContextPath() + "/auth?action=register&alert=success&message=register_success");
+
+			} else {
 				// register failed
+				response.sendRedirect(request.getContextPath() + "/auth?action=register&alert=danger&message=register_failed");
 			}
-				
+
 		}
 	}
 

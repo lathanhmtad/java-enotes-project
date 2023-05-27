@@ -9,13 +9,10 @@
 <title>Home</title>
 </head>
 <body>
-	<div class="pt-5">
-		<h1 class="text-center">
+	<div style="background-image: url('assets/img/bg3.jpg')" class="banner">
+		<h1 class="text-center position-absolute banner-heading text-light">
 			<i class="fa-solid fa-book"></i> E Notes-Save Your Notes
 		</h1>
-		<div class="text-center">
-			<img src="assets/img/bg2.png" alt="background" />
-		</div>
 	</div>
 </body>
 </html>

@@ -17,13 +17,27 @@ public class NoteDAO extends AbstractDAO<NoteModel> {
 		return id;
 	}
 
-	public List<NoteModel> findAllByUserId(Long id) {
-		String sql = "select * from note where user_id = ?";
-		return query(sql, new NoteMapper(), id);
+	public List<NoteModel> findAllByUserId(Long userId) {
+		String sql = "select *\r\n"
+				+ "from note\r\n"
+				+ "where user_id = ?\r\n"
+				+ "order by modified_date desc, id desc;";
+		return query(sql, new NoteMapper(), userId);
+	}
+	
+	public List<NoteModel> findAllByUserId(Long userId, Long latestNoteId) {
+		String sql = "select *\r\n"
+				+ "from note\r\n"
+				+ "where user_id = ?\r\n"
+				+ "order by \r\n"
+				+ "	case when id = ? then 0 else 1 end,\r\n"
+				+ "    modified_date desc,\r\n"
+				+ "    id desc;";
+		return query(sql, new NoteMapper(), userId, latestNoteId);
 	}
 
 	public boolean deleteNoteById(Long id) {
-		String sql = "DELETE FROM note WHERE id= ? ";
+		String sql = "DELETE FROM note WHERE id= ?";
 		return update(sql, id);
 	}
 
@@ -33,9 +47,10 @@ public class NoteDAO extends AbstractDAO<NoteModel> {
 		return notes.isEmpty() ? null : notes.get(0);
 	}
 
-	public boolean updateNote(NoteModel newNote) {
-		String sql = "UPDATE note set title = ?, content = ? where id = ?";
-		return update(sql, newNote.getTitle(), newNote.getContent(), newNote.getId());
+	public boolean update(NoteModel newNote) {
+		newNote.setModifiedDate(new Timestamp(System.currentTimeMillis()));
+		String sql = "UPDATE note set title = ?, content = ?, modified_date = ? where id = ?";
+		return update(sql, newNote.getTitle(), newNote.getContent(), newNote.getModifiedDate(), newNote.getId());
 	}
 
 }

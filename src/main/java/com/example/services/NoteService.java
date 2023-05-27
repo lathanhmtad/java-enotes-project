@@ -7,11 +7,20 @@ import com.example.model.NoteModel;
 
 public class NoteService {
 
+	private static NoteService noteService = null;
+	
 	private NoteDAO dao;
 	
 	public NoteService() {
 		super();
 		this.dao = new NoteDAO();
+	}
+	
+	public static NoteService getInstance() {
+		if(noteService == null) {
+			noteService = new NoteService();
+		}
+		return noteService;
 	}
 
 
@@ -21,26 +30,22 @@ public class NoteService {
 	}
 
 
-	public List<NoteModel> findAllByUserId(Long id) {
-		return dao.findAllByUserId(id);
+	public List<NoteModel> findAllByUserId(Long id, Long latestId) {
+		return dao.findAllByUserId(id, latestId);
 	}
-
-
 
 	public boolean deleteNoteById(Long id) {
 		return dao.deleteNoteById(id);
 		
 	}
 
-
-
 	public NoteModel findOneById(Long id) {
 		return dao.findOneById(id);
 	}
 
 
-	public boolean updateNote(NoteModel newNote) {
-		return dao.updateNote(newNote);
+	public boolean update(NoteModel newNote) {
+		return dao.update(newNote);
 	}
 	
 }

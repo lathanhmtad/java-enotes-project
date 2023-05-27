@@ -39,3 +39,18 @@ a {
 	background-color: #fff;
 	color: #000;
 }
+
+.banner {
+	background-size: cover;
+	background-repeat: no-repeat;
+	padding-top: 50%;
+	position: relative;
+}
+
+.banner-heading {
+	position: absolute;
+	top: 24%;
+	left: 0;
+	right: 0;
+	
+}
