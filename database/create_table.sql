@@ -1,4 +1,5 @@
-use enotes_management;
+create database enotes;
+use enotes;
 
 CREATE TABLE user (
   id bigint PRIMARY KEY auto_increment,
